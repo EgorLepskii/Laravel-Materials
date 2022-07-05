@@ -1,0 +1,28 @@
+version: '3.8'
+
+
+services:
+    database:
+        image: mysql
+        container_name: materials-database
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: qUgr7YKwzPaokcQ1vxYO8ToU0Kg
+            MYSQL_DATABASE: Materials
+
+        ports:
+            - '3301:3306'
+    php-materials:
+        container_name: Materials
+        build:
+            context: .
+        ports:
+            - '8050:80'
+        volumes:
+            - .:/var/www
+            - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+            - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+        environment:
+            XDEBUG_CONFIG: 'discover_client_host=true client_host=172.17.0.1 log_level=1'
+        depends_on:
+            - database
