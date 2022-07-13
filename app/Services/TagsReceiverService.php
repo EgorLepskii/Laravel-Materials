@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Exceptions\IncorrectCollectionTypeException;
@@ -22,12 +23,10 @@ class TagsReceiverService
         $materialTags = $material->tags()->get();
         $materialTagsIds = [];
 
-        foreach ($materialTags as $materialTag)
-        {
+        foreach ($materialTags as $materialTag) {
             $materialTagsIds[] = $materialTag->getAttribute('id');
         }
 
         return Tag::query()->whereNotIn('id', $materialTagsIds)->get();
     }
-
 }

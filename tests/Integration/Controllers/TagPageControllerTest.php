@@ -2,7 +2,6 @@
 
 namespace Integration\Controllers;
 
-
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TagPageController;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -48,8 +47,6 @@ class TagPageControllerTest extends TestCase
         // $data[0] - first element, saved to database with account index, that more per unit, than
         // maximum allowed count to show. Assert, that this element will not be displayed on first page
         $response->assertSee($data[0]['name']);
-
-
     }
 
     /**

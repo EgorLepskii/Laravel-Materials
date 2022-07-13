@@ -23,7 +23,7 @@
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="Напишите название" id="floatingName"
-                                   name="name">
+                                   name="name" value="{{old('name')}}">
                             <label for="floatingName">Название</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">

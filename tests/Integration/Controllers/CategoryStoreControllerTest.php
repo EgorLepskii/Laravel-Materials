@@ -2,7 +2,6 @@
 
 namespace Integration\Controllers;
 
-
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryPageController;
 use App\Http\Controllers\TagController;

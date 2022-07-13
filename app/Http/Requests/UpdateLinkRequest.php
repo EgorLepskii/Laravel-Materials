@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Controllers\LinkController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\Rule;
 
 class UpdateLinkRequest extends FormRequest
@@ -29,7 +30,6 @@ class UpdateLinkRequest extends FormRequest
         $materialId = $request->input('materialId');
         $linkId = $request->input('linkId');
 
-
         return [
             'materialId' => 'required|exists:materials,id',
             'sign' => [
@@ -37,7 +37,16 @@ class UpdateLinkRequest extends FormRequest
                     ->whereNot('sign', "")->ignore($linkId),
                 sprintf('max:%s', LinkController::MAX_LINK_SIGN)
             ],
-            'url' => sprintf('required|max:%s', LinkController::MAX_LINK_URL),
+            'url' => sprintf('required|max:%s|url', LinkController::MAX_LINK_URL),
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'Нужно заполнить все поля',
+            'url' => Lang::get('validation.url')
+
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Integration\Controllers;
 
-
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\Link;
 use Faker\Factory;

@@ -33,6 +33,9 @@ Route::group(
     Route::delete('/destroy/{tag}', [TagController::class, 'destroy'])->name('tag.destroy');
     Route::get('/create', [TagController::class, 'create'])->name('tag.create');
     Route::get('/{page?}', [TagController::class, 'index'])->name('tag.index');
+
+    Route::get('/{tag}/edit', [TagController::class, 'edit'])->name('tag.edit');
+    Route::post('/{tag}/update', [TagController::class, 'update'])->name('tag.update');
 }
 );
 
@@ -48,6 +51,9 @@ Route::group(
     Route::delete('/destroy/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
     Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/{page?}', [CategoryController::class, 'index'])->name('category.index');
+
+    Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/{category}/update', [CategoryController::class, 'update'])->name('category.update');
 
 }
 );

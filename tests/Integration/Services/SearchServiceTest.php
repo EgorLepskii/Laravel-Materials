@@ -46,7 +46,6 @@ class SearchServiceTest extends TestCase
 
         DB::beginTransaction();
         $this->notSuitableMaterial = Material::factory()->create();
-
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Integration\Controllers;
 
-
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryPageController;
 use App\Http\Controllers\TagController;
@@ -64,6 +63,5 @@ class CategoryPageControllerTest extends TestCase
     {
         DB::rollBack();
         parent::tearDown();
-
     }
 }

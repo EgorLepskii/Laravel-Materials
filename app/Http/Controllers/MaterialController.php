@@ -7,7 +7,6 @@ use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Models\Category;
 use App\Models\Material;
-use App\Models\Tag;
 use App\Models\Type;
 use App\Services\MaterialCategoryReceiverService;
 use App\Services\MaterialTypeReceiverService;
@@ -41,9 +40,9 @@ class MaterialController extends Controller
     public const MAX_DESCRIPTION_LENGTH = 255;
 
     public function __construct(
-        private Factory         $viewFactory,
-        private Redirector      $redirector,
-        private UrlGenerator    $urlGenerator,
+        private Factory $viewFactory,
+        private Redirector $redirector,
+        private UrlGenerator $urlGenerator,
         private ResponseFactory $responseFactory
     ) {
     }
@@ -52,7 +51,7 @@ class MaterialController extends Controller
     /**
      * Show all material
      *
-     * @param  Request $request
+     * @param Request $request
      * @return Application|Factory|\Illuminate\Support\Facades\View
      * @throws IncorrectCollectionTypeException
      */
@@ -73,10 +72,10 @@ class MaterialController extends Controller
             [
                 'materials' => $materials,
                 'types' => $types,
-                'categories' => $categories
+                'categories' => $categories,
+                'search' => $searchString
             ]
         );
-
     }
 
     /**
@@ -94,7 +93,7 @@ class MaterialController extends Controller
     /**
      * Create new material
      *
-     * @param  CreateMaterialRequest $request
+     * @param CreateMaterialRequest $request
      * @return Application|RedirectResponse|Redirector
      */
     public function store(CreateMaterialRequest $request): Redirector|RedirectResponse|Application
@@ -108,24 +107,25 @@ class MaterialController extends Controller
     /**
      * Show page to update material
      *
-     * @param  Material $material
+     * @param Material $material
      * @return Application|Factory|View
      */
     public function edit(Material $material): View|Factory|Application
     {
-        $currentType = $material->type()->getQuery()->first();
-        $currentCategory = $material->category()->getQuery()->first();
+        $currentType = $material->type();
+        $currentCategory = $material->category();
 
-        $types = Type::query()->where('id', '!=', $currentType->getAttribute('id'))->get();
-        $categories = Category::query()->where('id', '!=', $currentCategory->getAttribute('id'))->get();
+        $types = Type::query()->get();
 
+        $categories = Category::query()->get();
 
         return $this->viewFactory->make(
-            'updateMaterial', [
+            'updateMaterial',
+            [
                 'types' => $types,
                 'categories' => $categories,
-                'currentType' => $currentType,
-                'currentCategory' => $currentCategory,
+                'currentTypeId' => $currentType->first()->getAttribute('id'),
+                'currentCategoryId' => $currentCategory->first()->getAttribute('id'),
                 'material' => $material
             ]
         );
@@ -134,8 +134,8 @@ class MaterialController extends Controller
     /**
      * Update material data
      *
-     * @param  UpdateMaterialRequest $request
-     * @param  Material              $material
+     * @param UpdateMaterialRequest $request
+     * @param Material $material
      * @return Application|RedirectResponse|Redirector
      */
     public function update(UpdateMaterialRequest $request, Material $material): Redirector|RedirectResponse|Application
@@ -149,14 +149,15 @@ class MaterialController extends Controller
     /**
      * Show page with material
      *
-     * @param  Material $material
+     * @param Material $material
      * @return Application|Factory|View
      */
     public function show(Material $material): View|Factory|Application
     {
-        $materialCategoryName = $material->category()->getQuery()->first()->getAttribute('name');
-        $materialTypeName = $material->type()->getQuery()->first()->getAttribute('name');
+        $materialCategoryName = $material->category()->first()->getAttribute('name');
+        $materialTypeName = $material->type()->first()->getAttribute('name');
         $materialTags = $material->tags()->getQuery()->get();
+
         $links = $material->links()->get();
         $tags = (new TagsReceiverService())->receive($material);
 
@@ -176,7 +177,7 @@ class MaterialController extends Controller
     /**
      * Delete material and all tags and links, linked to material
      *
-     * @param  Material $material
+     * @param Material $material
      * @return Application|ResponseFactory|Response
      */
     public function destroy(Material $material): Response|Application|ResponseFactory

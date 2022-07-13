@@ -2,7 +2,6 @@
 
 namespace Integration\Model;
 
-
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\Category;
 use App\Models\MaterialTag;
@@ -75,7 +74,6 @@ class MaterialTest extends TestCase
         foreach ($materials->tags()->get() as $materialTag) {
             $this->assertTrue($tags->contains('name', $materialTag->getAttribute('name')));
         }
-
     }
 
     /**
@@ -109,7 +107,6 @@ class MaterialTest extends TestCase
 
         $tags  = $this->material->materialsTags()->get();
         $this->assertTrue($tags->contains('id', $linkedTag->getAttribute('id')));
-
     }
 
     public function tearDown(): void

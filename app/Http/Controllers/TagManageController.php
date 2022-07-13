@@ -13,11 +13,11 @@ use Spatie\LaravelIgnition\Solutions\SolutionProviders\DefaultDbNameSolutionProv
 class TagManageController extends Controller
 {
     protected Material $material;
-    public function __construct
-    (
+    public function __construct(
         private \Illuminate\Routing\Redirector $redirector,
         private \Illuminate\Database\DatabaseManager $databaseManager
-    ) {}
+    ) {
+    }
 
     /**
      * Link tag to material

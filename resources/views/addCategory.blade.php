@@ -24,7 +24,7 @@
                     <form action="{{route('category.store')}}" method="post">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input name="name" type="text" class="form-control" placeholder="Напишите название" id="floatingName">
+                            <input name="name" type="text" value="{{old('name')}}" class="form-control" placeholder="Напишите название" id="floatingName">
                             <label for="floatingName">Название</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">

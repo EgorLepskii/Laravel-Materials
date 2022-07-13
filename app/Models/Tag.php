@@ -17,7 +17,7 @@ class Tag extends Model
     /**
      * Receive entries from materials_tags table for current tag
      *
-     * @return hasMany
+     * @return HasMany
      */
     public function materialsTags(): HasMany
     {

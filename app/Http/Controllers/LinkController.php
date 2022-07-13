@@ -25,6 +25,7 @@ class LinkController extends Controller
      * @var int
      */
     public const MAX_LINK_URL = 255;
+
     public function __construct(
         private \Illuminate\Routing\Redirector $redirector,
         private \Illuminate\Contracts\Routing\ResponseFactory $responseFactory,

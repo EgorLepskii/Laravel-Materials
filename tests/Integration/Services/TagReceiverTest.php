@@ -41,13 +41,11 @@ class TagReceiverTest extends TestCase
         $service = new TagsReceiverService();
         $output = $service->receive($material);
 
-        foreach ($tags as $tag)
-        {
+        foreach ($tags as $tag) {
             $this->assertTrue($output->contains('id', $tag->getAttribute('id')));
         }
 
         $this->assertFalse($output->contains('id', $tagForLink->getAttribute('id')));
-
     }
 
 

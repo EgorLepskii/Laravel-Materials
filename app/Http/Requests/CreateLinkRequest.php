@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Controllers\LinkController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\Rule;
 
 class CreateLinkRequest extends FormRequest
@@ -33,7 +34,7 @@ class CreateLinkRequest extends FormRequest
                 Rule::unique('links')->where('material_id', $materialId)->whereNot('sign', ""),
                 sprintf('max:%s', LinkController::MAX_LINK_SIGN)
             ],
-            'url' => sprintf('required|max:%s', LinkController::MAX_LINK_URL),
+            'url' => sprintf('required|max:%s|url', LinkController::MAX_LINK_URL),
             'material_id' => 'required|exists:materials,id',
 
         ];
@@ -42,7 +43,8 @@ class CreateLinkRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Заполните поле со ссылкой'
+            'required' => 'Заполните поле со ссылкой',
+            'url' => Lang::get('validation.url')
         ];
     }
 }

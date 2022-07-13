@@ -184,7 +184,6 @@ class MaterialUpdateTest extends TestCase
             route('material.update', ['material' => $material->getAttribute('id')]),
             $data
         )->assertSessionHasErrors('name');
-
     }
 
     public function tearDown(): void

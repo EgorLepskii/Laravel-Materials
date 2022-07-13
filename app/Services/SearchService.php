@@ -23,7 +23,6 @@ class SearchService
             ->union($this->searchByAuthors($searchString))
             ->union($this->searchByTags($searchString))
             ->union($this->searchByCategories($searchString));
-
     }
 
     /**
@@ -75,6 +74,5 @@ class SearchService
             ->join('materials', 'materials.category_id', '=', 'categories.id')
             ->where('categories.name', 'LIKE', "%$searchString%")
             ->select('materials.*')->distinct();
-
     }
 }

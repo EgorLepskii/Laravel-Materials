@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Exceptions\IncorrectCollectionTypeException;
@@ -19,19 +20,17 @@ class MaterialTypeReceiverService
      */
     public function receive(Collection $materials): Collection
     {
-        if(Material::class != $materials->getQueueableClass() && $materials->getQueueableClass()) {
+        if (Material::class != $materials->getQueueableClass() && $materials->getQueueableClass()) {
             throw new IncorrectCollectionTypeException('Incorrect collection type(expected Material)');
         }
 
         $collection = new Collection();
 
-        foreach ($materials as $material)
-        {
+        foreach ($materials as $material) {
             $this->material = $material;
             $collection->add($this->material->type()->getQuery()->first());
         }
 
         return $collection;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace Integration\Controllers;
 
-
 use App\Http\Controllers\TagController;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\Tag;

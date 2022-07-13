@@ -9,7 +9,6 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use Tests\TestCase;
 use Faker\Factory;
 
-
 class TagManageStoreTest extends TestCase
 {
     protected \Faker\Generator $faker;

@@ -2,7 +2,7 @@
 
 ?>
 
-<!doctype html>
+    <!doctype html>
 <html lang="ru">
 <head>
     <!-- Required meta tags -->
@@ -24,17 +24,36 @@
             <h1 class="my-md-5 my-4">Обновить материал</h1>
             <div class="row">
                 <div class="col-lg-5 col-md-8">
-                    <form action="{{route('material.update',['material' => $material->getAttribute('id')])}}" method="post">
+                    <form action="{{route('material.update',['material' => $material->getAttribute('id')])}}"
+                          method="post">
                         @csrf
                         <input type="hidden" name="id" value="{{$material->getAttribute('id')}}">
                         <div class="form-floating mb-3">
+
                             <select name="type_id" class="form-select" id="floatingSelectType">
 
-                                <option value = "{{$currentType->getAttribute('id')}}" selected>{{$currentType->getAttribute('name')}}</option>
+                                @if(empty(old('type_id')))
 
-                                @foreach($types as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                @endforeach
+                                    @foreach($types as $type)
+                                        @if($type->id == $currentTypeId)
+                                            <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                                        @else
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+
+                                    @foreach($types as $type)
+
+                                        @if($type->id == old('type_id'))
+                                            <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                                        @else
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+
+                                        @endif
+                                    @endforeach
+
+                                @endif
                             </select>
                             <label for="floatingSelectType">Тип</label>
                             @if($errors->any())
@@ -46,10 +65,28 @@
                         </div>
                         <div class="form-floating mb-3">
                             <select name="category_id" class="form-select" id="floatingSelectCategory">
-                                <option value = "{{$currentCategory->getAttribute('id')}}" selected>{{$currentCategory->getAttribute('name')}}</option>
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
+
+                                @if(empty(old('category_id')))
+
+                                    @foreach($categories as $category)
+                                        @if($category->id == $currentCategoryId)
+                                            <option value="{{$category->id}}" selected>{{$category->name}}</option>
+                                        @else
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+
+                                    @foreach($categories as $category)
+                                        @if($category->id == old('category_id'))
+                                            <option value="{{$category->id}}" selected>{{$category->name}}</option>
+                                        @else
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+
+                                        @endif
+                                    @endforeach
+
+                                @endif
                             </select>
                             <label for="floatingSelectCategory">Категория</label>
                             @if($errors->any())
@@ -60,7 +97,8 @@
                             @endif
                         </div>
                         <div class="form-floating mb-3">
-                            <input name = "name" type="text" value="{{$material->getAttribute('name')}}" class="form-control" placeholder="Напишите название" id="floatingName">
+                            <input name="name" type="text" value="{{old('name') ?? $material->getAttribute('name')}}"
+                                   class="form-control" placeholder="Напишите название" id="floatingName">
                             <label for="floatingName">Название</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">
@@ -70,7 +108,8 @@
                             @endif
                         </div>
                         <div class="form-floating mb-3">
-                            <input name = "authors" value="{{$material->getAttribute('authors')}}" type="text" class="form-control"  id="floatingAuthor">
+                            <input name="authors" value="{{old('authors') ?? $material->getAttribute('authors')}}" type="text"
+                                   class="form-control" id="floatingAuthor">
                             <label for="floatingAuthor">Авторы</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">
@@ -80,8 +119,9 @@
                             @endif
                         </div>
                         <div class="form-floating mb-3">
-                    <textarea name = "description"  class="form-control" placeholder="Напишите краткое описание" id="floatingDescription"
-                              style="height: 100px">{{$material->getAttribute('description')}}</textarea>
+                    <textarea name="description" class="form-control" placeholder="Напишите краткое описание"
+                              id="floatingDescription"
+                              style="height: 100px">{{old('description') ?? $material->getAttribute('description')}}</textarea>
                             <label for="floatingDescription">Описание</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">

@@ -12,7 +12,9 @@ document.querySelectorAll('.delete-tag-link').forEach(function (e){
         let uri = "tagManage/destroy";
         let redirectUri = "/material/" + materialId;
 
+
         let xhr = sendRequest(window.location.origin + `/${uri}?entryid=${entryid}`,'delete');
+
 
         xhr.onreadystatechange = function ()
         {

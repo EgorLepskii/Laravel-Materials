@@ -27,9 +27,24 @@
 
                                 <option selected>Выберите тип</option>
 
-                               @foreach($types as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                @endforeach
+                                @if(empty(old('type_id')))
+
+                                    @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
+                                @else
+
+                                    @foreach($types as $type)
+
+                                        @if($type->id == old('type_id'))
+                                            <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                                        @else
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+
+                                        @endif
+                                    @endforeach
+
+                                @endif
                             </select>
                             <label for="floatingSelectType">Тип</label>
                             @if($errors->any())
@@ -42,9 +57,23 @@
                         <div class="form-floating mb-3">
                             <select name="category_id" class="form-select" id="floatingSelectCategory">
                                 <option selected>Выберите категорию</option>
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
+                                @if(empty(old('category_id')))
+
+                                    @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                @else
+
+                                    @foreach($categories as $category)
+                                        @if($category->id == old('category_id'))
+                                            <option value="{{$category->id}}" selected>{{$category->name}}</option>
+                                        @else
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+
+                                        @endif
+                                    @endforeach
+
+                                @endif
                             </select>
                             <label for="floatingSelectCategory">Категория</label>
                             @if($errors->any())
@@ -55,7 +84,7 @@
                             @endif
                         </div>
                         <div class="form-floating mb-3">
-                            <input name = "name" type="text" class="form-control" placeholder="Напишите название" id="floatingName">
+                            <input name = "name" type="text" value="{{old('name')}}" class="form-control" placeholder="Напишите название" id="floatingName">
                             <label for="floatingName">Название</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">
@@ -65,7 +94,7 @@
                             @endif
                         </div>
                         <div class="form-floating mb-3">
-                            <input name = "authors" type="text" class="form-control" placeholder="Напишите авторов" id="floatingAuthor">
+                            <input name = "authors" value="{{old('authors')}}" type="text" class="form-control" placeholder="Напишите авторов" id="floatingAuthor">
                             <label for="floatingAuthor">Авторы</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">
@@ -75,8 +104,8 @@
                             @endif
                         </div>
                         <div class="form-floating mb-3">
-                    <textarea name = "description" class="form-control" placeholder="Напишите краткое описание" id="floatingDescription"
-                              style="height: 100px"></textarea>
+                    <textarea name = "description"  class="form-control" placeholder="Напишите краткое описание" id="floatingDescription"
+                              style="height: 100px">{{old('description')}}</textarea>
                             <label for="floatingDescription">Описание</label>
                             @if($errors->any())
                                 <div class="invalid-feedback" style="display: block">

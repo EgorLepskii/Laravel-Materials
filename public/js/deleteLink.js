@@ -2,6 +2,8 @@ document.querySelectorAll('.delete-link').forEach(function (e){
     e.addEventListener('click', function (){
         let status = confirm('Подтвердите удаление');
 
+
+
         if (!status) return;
         let materialId = e.dataset.material;
         let linkId = e.dataset.link;

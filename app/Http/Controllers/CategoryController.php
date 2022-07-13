@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\CreateTagRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\Material;
 use App\Models\Tag;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -31,14 +33,12 @@ class CategoryController extends Controller
     protected Material $material;
 
 
-    public function __construct
-    (
+    public function __construct(
         private Factory $viewFactory,
         private Redirector $redirector,
         private UrlGenerator $urlGenerator,
         private ResponseFactory $responseFactory
-    )
-    {
+    ) {
     }
 
     /**
@@ -58,14 +58,14 @@ class CategoryController extends Controller
     /**
      * Delete category and all materials, tags, and links, linked to material
      *
-     * @param  Category $category
+     * @param Category $category
      * @return Response
      */
     public function destroy(Category $category): Response
     {
-        $materials = $category->materials()->get();
-        foreach ($materials as $material)
-        {
+        $materials = $category->materials;
+
+        foreach ($materials as $material) {
             $this->material = $material;
             $this->material->materialsTags()->delete();
             $this->material->links()->delete();
@@ -103,5 +103,27 @@ class CategoryController extends Controller
         return $this->viewFactory->make('addCategory');
     }
 
+    /**
+     * Show page to update category
+     *
+     * @param Category $category
+     * @return View
+     */
+    public function edit(Category $category): View
+    {
+        return $this->viewFactory->make('updateCategory', ['category' => $category]);
+    }
 
+    /**
+     * Update category
+     *
+     * @param UpdateCategoryRequest $request
+     * @param Category $category
+     * @return RedirectResponse
+     */
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
+    {
+        $category->update(['name' => $request->input('name')]);
+        return $this->redirector->to($this->urlGenerator->route('category.index'));
+    }
 }

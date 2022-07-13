@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @property HasOne $type
+ * @property HasOne $category
+ * @property BelongsToMany $tags
+ * @property HasMany $links;
+ */
 class Material extends Model
 {
     use HasFactory;
@@ -20,7 +26,7 @@ class Material extends Model
     /**
      * @return HasOne
      */
-    public function category(): hasOne
+    public function category(): HasOne
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
@@ -28,7 +34,7 @@ class Material extends Model
     /**
      * @return HasOne
      */
-    public function type(): hasOne
+    public function type(): HasOne
     {
         return $this->hasOne(Type::class, 'id', 'type_id');
     }
@@ -46,7 +52,7 @@ class Material extends Model
     /**
      * Receive entries from materials_tags table for current material
      *
-     * @return hasMany
+     * @return HasMany
      */
     public function materialsTags(): HasMany
     {
@@ -64,7 +70,7 @@ class Material extends Model
     /**
      * Link new tag to material
      *
-     * @param  int $tagId
+     * @param int $tagId
      * @return void
      */
     public function addTag(int $tagId): void

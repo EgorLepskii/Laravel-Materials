@@ -33,7 +33,7 @@
                 <div class="col-md-8">
                     <form action="{{route('material.index')}}" method="get">
                         <div class="input-group mb-3">
-                            <input type="text" name="search" class="form-control" placeholder=""
+                            <input type="text" name="search" class="form-control" placeholder="" value="{{$search}}"
                                    aria-label="Example text with button addon" aria-describedby="button-addon1">
                             <button class="btn btn-primary" type="submit" id="button-addon1">Искать</button>
                         </div>

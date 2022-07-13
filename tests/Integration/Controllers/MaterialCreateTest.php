@@ -35,13 +35,11 @@ class MaterialCreateTest extends TestCase
 
         $response = $this->get(route('material.create'));
 
-        foreach (Type::all() as $type)
-        {
+        foreach (Type::all() as $type) {
             $response->assertSee($type->getAttribute('name'));
         }
 
-        foreach (Category::all() as $category)
-        {
+        foreach (Category::all() as $category) {
             $response->assertSee($category->getAttribute('name'));
         }
     }
