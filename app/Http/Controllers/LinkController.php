@@ -82,7 +82,9 @@ class LinkController extends Controller
      */
     public function update(UpdateLinkRequest $request, Link $link): Redirector|RedirectResponse|Application
     {
-        $link->update($request->only(['sign', 'url']));
+        $url  = $request->input('urlUpdate');
+        $sign = $request->input('signUpdate');
+        $link->update(['sign' => $sign, 'url' => $url]);
         $materialId = $request->input('materialId');
 
         return $this->redirector->to($this->urlGenerator->route('material.show', ['material' => $materialId]));

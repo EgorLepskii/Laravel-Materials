@@ -32,12 +32,12 @@ class UpdateLinkRequest extends FormRequest
 
         return [
             'materialId' => 'required|exists:materials,id',
-            'sign' => [
-                Rule::unique('links')->where('material_id', $materialId)
+            'signUpdate' => [
+                Rule::unique('links','sign')->where('material_id', $materialId)
                     ->whereNot('sign', "")->ignore($linkId),
                 sprintf('max:%s', LinkController::MAX_LINK_SIGN)
             ],
-            'url' => sprintf('required|max:%s|url', LinkController::MAX_LINK_URL),
+            'urlUpdate' => sprintf('required|max:%s|url', LinkController::MAX_LINK_URL),
         ];
     }
 

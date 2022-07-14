@@ -107,8 +107,10 @@
 
                                 </a>
                                 <span class="text-nowrap">
-                            <a href="#" class="text-decoration-none me-2 update-links" data-linkid="{{$link->id}}" data-linksign="{{$link->sign}}" data-linkurl="{{$link->url}}">
-                            <a href="#" class="text-decoration-none me-2 update-links" data-linkid="{{$link->id}}" data-linksign="{{$link->sign}}" data-linkurl="{{$link->url}}">
+                            <a href="#" class="text-decoration-none me-2 update-links" data-linkid="{{$link->id}}"
+                               data-linksign="{{$link->sign}}" data-linkurl="{{$link->url}}">
+                            <a href="#" class="text-decoration-none me-2 update-links" data-linkid="{{$link->id}}"
+                               data-linksign="{{$link->sign}}" data-linkurl="{{$link->url}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-pencil" viewBox="0 0 16 16">
                         <path
@@ -145,7 +147,7 @@
 
 </div>
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="false" aria-labelledby="exampleModalToggleLabel"
+<div class="modal fade" id="exampleModalToggle"  aria-hidden="false" aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -157,22 +159,29 @@
                 <form action="{{route('link.store')}}" method="post">
                     <div class="form-floating mb-3">
                         <input type="text" name="sign" class="form-control" placeholder="Добавьте подпись"
-                               id="floatingModalSignature">
+                               id="floatingModalSignature" value="{{old('sign')}}">
                         <label for="floatingModalSignature">Подпись</label>
-                        <div class="invalid-feedback">
-                            Пожалуйста, заполните поле
-                        </div>
+                        @if($errors->any())
+                            <div class="invalid-feedback" style="display: block">
+                                {{$errors->first('sign')}}
+                            </div>
+                        @endif
+
 
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" name="url" class="form-control" placeholder="Добавьте ссылку"
-                               id="floatingModalLink">
+                               id="floatingModalLink" value="{{old('url')}}">
                         <input type="hidden" name="material_id" class="form-control" id="link-material-id"
                                value="{{$material->id}}">
                         <label for="floatingModalLink">Ссылка</label>
-                        <div class="invalid-feedback">
-                            Пожалуйста, заполните поле
-                        </div>
+
+                        @if($errors->any())
+                            <div class="invalid-feedback" style="display: block">
+                                {{$errors->first('url')}}
+                            </div>
+                        @endif
+
                     </div>
 
                     <div class="modal-footer">
@@ -181,8 +190,6 @@
                     </div>
                 </form>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -200,23 +207,29 @@
             <div class="modal-body">
                 <form action="" method="post">
                     <div class="form-floating mb-3">
-                        <input type="text" name="sign" class="form-control" placeholder="Добавьте подпись"
-                               id="floatingModalSignature">
+                        <input type="text" name="signUpdate" class="form-control" placeholder="Добавьте подпись"
+                               id="floatingModalSignature" value="{{old('signUpdate')}}">
                         <label for="floatingModalSignature">Подпись</label>
-                        <div class="invalid-feedback">
-                            Пожалуйста, заполните поле
-                        </div>
+                        @if($errors->any())
+                            <div class="invalid-feedback" style="display: block">
+                                {{$errors->first('signUpdate')}}
+                            </div>
+                        @endif
 
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="url" class="form-control" placeholder="Добавьте ссылку"
-                               id="floatingModalLink">
+                        <input type="text" name="urlUpdate" class="form-control" placeholder="Добавьте ссылку"
+                               id="floatingModalLink" value="{{old('urlUpdate')}}">
                         <input type="hidden" name="materialId" class="form-control" id="link-material-id"
                                value="{{$material->id}}">
                         <label for="floatingModalLink">Ссылка</label>
-                        <div class="invalid-feedback">
-                            Пожалуйста, заполните поле
-                        </div>
+
+                        @if($errors->any())
+                            <div class="invalid-feedback" style="display: block">
+                                {{$errors->first('urlUpdate')}}
+                            </div>
+                        @endif
+
                     </div>
 
                     <div class="modal-footer">

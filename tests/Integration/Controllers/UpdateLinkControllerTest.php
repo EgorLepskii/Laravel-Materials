@@ -48,13 +48,13 @@ class UpdateLinkControllerTest extends TestCase
 
         $data =
             [
-                'sign' => $duplicateLink->getAttribute('sign'),
+                'signUpdate' => $duplicateLink->getAttribute('sign'),
                 'url' => $this->faker->url,
                 'materialId' => $link->getAttribute('material_id')
             ];
 
         $this->post(route('link.update', ['link' => $link->getAttribute('id')]), $data)
-            ->assertSessionHasErrors('sign');
+            ->assertSessionHasErrors('signUpdate');
     }
 
     /**
@@ -69,8 +69,8 @@ class UpdateLinkControllerTest extends TestCase
 
         $data =
             [
-                'sign' => $duplicateLink->getAttribute('sign'),
-                'url' => $this->faker->url,
+                'signUpdate' => $duplicateLink->getAttribute('sign'),
+                'urlUpdate' => $this->faker->url,
                 'materialId' => $link->getAttribute('material_id')
             ];
 
@@ -79,7 +79,7 @@ class UpdateLinkControllerTest extends TestCase
 
         $this->assertDatabaseHas(
             'links',
-            ['sign' => $data['sign'],'url' => $data['url']]
+            ['sign' => $data['signUpdate'],'url' => $data['urlUpdate']]
         );
     }
 
